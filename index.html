@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BK Loan App</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+header {
+    background: #092b55;
+    color: white;
+    text-align: center;
+    padding: 24px 12px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: #124879;
+}
+
+nav button {
+    border: none;
+    padding: 14px 12px;
+    background: transparent;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #087bdb;
+}
+
+.container {
+    width: 92%;
+    max-width: 760px;
+    margin: 25px auto;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px #0000000c;
+}
+
+.hero {
+    background: #092b55;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+    border-radius: 14px;
+}
+
+.hero h2 {
+    color: white;
+    font-size: 28px;
+}
+
+h2 {
+    color: #092b55;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 13px;
+    margin-top: 7px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 16px;
+    background: white;
+}
+
+button {
+    cursor: pointer;
+}
+
+.primary {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #087bdb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.primary:hover {
+    background: #075eaa;
+}
+
+.feature {
+    background: #e7f2ff;
+    padding: 15px;
+    border-radius: 9px;
+    margin: 10px 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.small {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.application {
+    border: 1px solid #cbd5e1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    overflow-wrap: anywhere;
+}
+
+.approve {
+    background: #16834a;
+    color: white;
+    padding: 11px;
+    border: none;
+    border-radius: 6px;
+    margin: 5px;
+}
+
+.reject {
+    background: #c62828;
+    color: white;
+    padding: 11px;
+    border: none;
+    border-radius: 6px;
+    margin: 5px;
+}
+
+.status {
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 25px;
+}
+
+@media (max-width: 480px) {
+    nav button {
+        padding: 12px 9px;
+        font-size: 13px;
+    }
+
+    .hero h2 {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏦 BK LOAN APP</h1>
+    <p>Your financial goals matter to us</p>
+</header>
+
+<nav>
+    <button type="button" onclick="showPage('home')">Home</button>
+    <button type="button" onclick="showPage('apply')">Apply for Loan</button>
+    <button type="button" onclick="showPage('calculator')">Calculator</button>
+    <button type="button" onclick="showPage('status')">My Applications</button>
+    <button type="button" onclick="showPage('admin')">Admin</button>
+</nav>
+
+<main class="container">
+
+<section id="home">
+    <div class="hero">
+        <h2>Welcome to BK Loan App</h2>
+        <p>Apply for a loan and let our team review your application.</p>
+        <button type="button" class="primary"
+                onclick="showPage('apply')">
+            Apply for a Loan
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>Our Services</h2>
+        <div class="feature">💰 Personal loan applications</div>
+        <div class="feature">📋 Manual application review</div>
+        <div class="feature">📊 Loan repayment calculator</div>
+        <div class="feature">📱 Application status tracking</div>
+    </div>
+
+    <div class="card">
+        <h2>How It Works</h2>
+        <p>1. Complete the loan application form.</p>
+        <p>2. Submit your application.</p>
+        <p>3. An administrator reviews your request.</p>
+        <p>4. Check your application status.</p>
+    </div>
+</section>
+
+<section id="apply" class="hidden">
+    <div class="card">
+        <h2>Loan Application</h2>
+
+        <form id="loanForm">
+            <label for="customerName">Full Name</label>
+            <input id="customerName" maxlength="100"
+                   autocomplete="name" required>
+
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel"
+                   autocomplete="tel"
+                   placeholder="0712345678" required>
+
+            <label for="loanAmount">Loan Amount (KSh)</label>
+            <input id="loanAmount" type="number"
+                   min="1000" max="1000000" step="100" required>
+
+            <label for="income">Monthly Income (KSh)</label>
+            <input id="income" type="number"
+                   min="0" max="100000000" required>
+
+            <label for="loanPurpose">Purpose of Loan</label>
+            <select id="loanPurpose" required>
+                <option value="">Choose purpose</option>
+                <option>Business</option>
+                <option>Education</option>
+                <option>Emergency</option>
+                <option>Agriculture</option>
+                <option>Personal expenses</option>
+                <option>Other</option>
+            </select>
+
+            <label for="duration">Repayment Period</label>
+            <select id="duration" required>
+                <option value="1">1 month</option>
+                <option value="3">3 months</option>
+                <option value="6">6 months</option>
+                <option value="12">12 months</option>
+                <option value="24">24 months</option>
+            </select>
+
+            <label for="notes">Additional Information (Optional)</label>
+            <textarea id="notes" maxlength="500" rows="3"></textarea>
+
+            <label>
+                <input type="checkbox" id="consent"
+                       style="width:auto" required>
+                I agree to submit this information for review.
+            </label>
+
+            <p class="small">
+                Submitting an application does not guarantee approval.
+            </p>
+
+            <button type="submit" class="primary">
+                Submit Application
+            </button>
+        </form>
+    </div>
+</section>
+
+<section id="calculator" class="hidden">
+    <div class="card">
+        <h2>Loan Repayment Calculator</h2>
+
+        <label for="calcAmount">Loan Amount (KSh)</label>
+        <input type="number" id="calcAmount"
+               min="1000" value="10000">
+
+        <label for="calcMonths">Repayment Period</label>
+        <select id="calcMonths">
+            <option value="1">1 month</option>
+            <option value="3">3 months</option>
+            <option value="6">6 months</option>
+            <option value="12">12 months</option>
+            <option value="24">24 months</option>
+        </select>
+
+        <label for="calcRate">Illustrative Annual Interest Rate (%)</label>
+        <input type="number" id="calcRate"
+               min="0" max="100" step="0.1" value="12">
+
+        <button type="button" class="primary"
+                onclick="calculateLoan()">
+            Calculate
+        </button>
+
+        <div id="calcResult" class="feature">
+            Enter details and tap Calculate.
+        </div>
+
+        <p class="small">
+            This is an estimate, not a loan offer. Actual interest,
+            fees and repayment terms must be disclosed before lending.
+        </p>
+    </div>
+</section>
+
+<section id="status" class="hidden">
+    <div class="card">
+        <h2>My Applications</h2>
+
+        <label for="lookupPhone">Phone Number Used to Apply</label>
+        <input id="lookupPhone" type="tel">
+
+        <button type="button" class="primary"
+                onclick="checkStatus()">
+            Check Status
+        </button>
+
+        <div id="statusResult"></div>
+    </div>
+</section>
+
+<section id="admin" class="hidden">
+    <div class="card">
+        <h2>Administrator Panel</h2>
+
+        <p class="small">
+            Demonstration only: this panel has no secure administrator
+            login. Anyone opening the page can review the locally stored
+            test applications. Do not use it for real customer data.
+        </p>
+
+        <button type="button" class="primary"
+                onclick="renderApplications()">
+            Refresh Applications
+        </button>
+
+        <div id="adminResult"></div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>© 2026 BK Loan App</p>
+    <p>Demo version — no real loans are issued.</p>
+</footer>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "bkLoanDemoApplications";
+
+function getApplications() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
+        );
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function saveApplications(applications) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
+}
+
+function showPage(page) {
+    document.querySelectorAll("main section").forEach(section => {
+        section.classList.add("hidden");
+    });
+
+    const selectedPage = document.getElementById(page);
+
+    if (!selectedPage) return;
+
+    selectedPage.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (page === "admin") {
+        renderApplications();
+    }
+}
+
+document.getElementById("loanForm").addEventListener(
+    "submit",
+    function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("customerName")
+            .value.trim();
+
+        const phone = document.getElementById("phone")
+            .value.trim();
+
+        const amount = Number(
+            document.getElementById("loanAmount").value
+        );
+
+        const income = Number(
+            document.getElementById("income").value
+        );
+
+        const months = Number(
+            document.getElementById("duration").value
+        );
+
+        const purpose = document.getElementById("loanPurpose").value;
+        const notes = document.getElementById("notes").value.trim();
+
+        if (!name || !phone || !purpose) {
+            alert("Please complete all required fields.");
+            return;
+        }
+
+        if (!/^[0-9+\s()-]{7,20}$/.test(phone)) {
+            alert("Please enter a valid phone number.");
+            return;
+        }
+
+        if (
+            !Number.isFinite(amount) ||
+            amount < 1000 ||
+            amount > 1000000 ||
+            !Number.isFinite(income) ||
+            income < 0 ||
+            income > 100000000
+        ) {
+            alert("Please enter valid loan and income amounts.");
+            return;
+        }
+
+        const application = {
+            id: "BK" + Date.now().toString().slice(-9),
+            name: name,
+            phone: phone,
+            amount: amount,
+            income: income,
+            months: months,
+            purpose: purpose,
+            notes: notes,
+            status: "Pending",
+            createdAt: new Date().toLocaleString()
+        };
+
+        try {
+            const applications = getApplications();
+            applications.push(application);
+            saveApplications(applications);
+        } catch (error) {
+            alert("Unable to save. Check browser storage.");
+            return;
+        }
+
+        alert(
+            "Application submitted!\nApplication ID: " +
+            application.id +
+            "\nStatus: Pending review"
+        );
+
+        this.reset();
+        showPage("status");
+        document.getElementById("lookupPhone").value = phone;
+        checkStatus();
+    }
+);
+
+function checkStatus() {
+    const phone = document.getElementById("lookupPhone")
+        .value.trim();
+
+    const result = document.getElementById("statusResult");
+    result.replaceChildren();
+
+    const matches = getApplications().filter(
+        app => app.phone === phone
+    );
+
+    if (!phone || matches.length === 0) {
+        result.textContent = "No applications found for that phone number.";
+        return;
+    }
+
+    matches.reverse().forEach(app => {
+        const card = document.createElement("div");
+        card.className = "application";
+
+        const title = document.createElement("h3");
+        title.textContent = "Application " + app.id;
+
+        const amount = document.createElement("p");
+        amount.textContent =
+            "Amount: KSh " + Number(app.amount).toLocaleString();
+
+        const status = document.createElement("p");
+        status.className = "status";
+        status.textContent = "Status: " + app.status;
+
+        const date = document.createElement("p");
+        date.textContent = "Submitted: " + app.createdAt;
+
+        card.append(title, amount, status, date);
+        result.appendChild(card);
+    });
+}
+
+function renderApplications() {
+    const result = document.getElementById("adminResult");
+    result.replaceChildren();
+
+    const applications = getApplications();
+
+    if (applications.length === 0) {
+        result.textContent = "No applications submitted yet.";
+        return;
+    }
+
+    applications.slice().reverse().forEach(app => {
+        const card = document.createElement("div");
+        card.className = "application";
+
+        function addText(tag, text) {
+            const element = document.createElement(tag);
+            element.textContent = text;
+            card.appendChild(element);
+        }
+
+        addText("h3", "Application " + app.id);
+        addText("p", "Customer: " + app.name);
+        addText("p", "Phone: " + app.phone);
+        addText("p", "Loan requested: KSh " +
+            Number(app.amount).toLocaleString());
+        addText("p", "Monthly income: KSh " +
+            Number(app.income).toLocaleString());
+        addText("p", "Purpose: " + app.purpose);
+        addText("p", "Repayment period: " + app.months + " months");
+        addText("p", "Date: " + app.createdAt);
+
+        const status = document.createElement("p");
+        status.className = "status";
+        status.textContent = "Status: " + app.status;
+        card.appendChild(status);
+
+        if (app.notes) {
+            addText("p", "Additional information: " + app.notes);
+        }
+
+        if (app.status === "Pending") {
+            const approve = document.createElement("button");
+            approve.type = "button";
+            approve.className = "approve";
+            approve.textContent = "Approve";
+            approve.onclick = () => updateStatus(app.id, "Approved");
+
+            const reject = document.createElement("button");
+            reject.type = "button";
+            reject.className = "reject";
+            reject.textContent = "Reject";
+            reject.onclick = () => updateStatus(app.id, "Rejected");
+
+            card.append(approve, reject);
+        }
+
+        result.appendChild(card);
+    });
+}
+
+function updateStatus(id, newStatus) {
+    const applications = getApplications();
+
+    const app = applications.find(item => item.id === id);
+
+    if (!app || app.status !== "Pending") return;
+
+    if (!confirm("Change application status to " + newStatus + "?")) {
+        return;
+    }
+
+    app.status = newStatus;
+
+    try {
+        saveApplications(applications);
+        renderApplications();
+    } catch (error) {
+        alert("Unable to save the status.");
+    }
+}
+
+function calculateLoan() {
+    const amount = Number(
+        document.getElementById("calcAmount").value
+    );
+
+    const months = Number(
+        document.getElementById("calcMonths").value
+    );
+
+    const annualRate = Number(
+        document.getElementById("calcRate").value
+    );
+
+    const result = document.getElementById("calcResult");
+
+    if (
+        !Number.isFinite(amount) ||
+        amount < 1000 ||
+        !Number.isFinite(annualRate) ||
+        annualRate < 0 ||
+        annualRate > 100
+    ) {
+        result.textContent = "Enter valid calculation details.";
+        return;
+    }
+
+    const monthlyRate = annualRate / 1200;
+
+    let payment;
+
+    if (monthlyRate === 0) {
+        payment = amount / months;
+    } else {
+        payment = amount * monthlyRate /
+            (1 - Math.pow(1 + monthlyRate, -months));
+    }
+
+    const total = payment * months;
+    const interest = total - amount;
+
+    result.textContent =
+        "Estimated monthly payment: KSh " +
+        payment.toLocaleString("en-KE", {
+            maximumFractionDigits: 2
+        }) +
+        " | Total repayment: KSh " +
+        total.toLocaleString("en-KE", {
+            maximumFractionDigits: 2
+        }) +
+        " | Estimated interest: KSh " +
+        interest.toLocaleString("en-KE", {
+            maximumFractionDigits: 2
+        });
+}
+</script>
+
+</body>
+</html>
